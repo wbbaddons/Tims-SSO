@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <package name="be.bastelstu.wcf.sso" xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/package.xsd">
 	<packageinformation>
-		<packagename><![CDATA[Login everywhere]]></packagename>
-		<packagedescription><![CDATA[Performes login in every application.]]></packagedescription>
+		<packagename><![CDATA[Tims Single Sign On]]></packagename>
+		<packagedescription><![CDATA[Performs login in every application, even on different domains.]]></packagedescription>
+		<packagedescription language=""><![CDATA[Loggt Benutzer in jeder Anwendung ein, selbst auf verschiedenen Domains.]]></packagedescription>
 		<standalone>0</standalone>
 		<version>1.0.0 Alpha 1</version>
 		<date>2012-04-14</date>
