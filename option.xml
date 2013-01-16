@@ -11,7 +11,7 @@
 			<option name="sso_persistent_login">
 				<categoryname>security.general.sso</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue>0</defaultvalue>
+				<defaultvalue>1</defaultvalue>
 			</option>
 			<option name="sso_salt">
 				<categoryname>security.general.sso</categoryname>

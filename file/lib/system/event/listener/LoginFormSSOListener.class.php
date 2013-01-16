@@ -30,15 +30,15 @@ class LoginFormSSOListener implements \wcf\system\event\IEventListener {
 			$abbreviations[] = ApplicationHandler::getInstance()->getAbbreviation($application->packageID);
 		}
 		
-		$cookies = array();
-		if (true || SSO_PERSISTENT_LOGIN && $eventObj->useCookies) {
+		$cookies = array(
+			array('name' => 'cookieHash', 'value' => \wcf\system\session\SessionHandler::getInstance()->sessionID, 'expires' => 0)
+		);
+		
+		if (SSO_PERSISTENT_LOGIN && $eventObj->useCookies) {
 			$user = $eventObj->user;
 			
-			$cookies = array(
-				array('name' => 'userID', 'value' => $user->userID, 'expires' => TIME_NOW + 365 * 24 * 3600),
-				array('name' => 'password', 'value' => \wcf\util\PasswordUtil::getSaltedHash($eventObj->password, $user->password), 'expires' => TIME_NOW + 365 * 24 * 3600),
-				array('name' => 'cookieHash', 'value' => \wcf\system\session\SessionHandler::getInstance()->sessionID, 'expires' => 0)
-			);
+			$cookies[] = array('name' => 'userID', 'value' => $user->userID, 'expires' => TIME_NOW + 365 * 24 * 3600);
+			$cookies[] = array('name' => 'password', 'value' => \wcf\util\PasswordUtil::getSaltedHash($eventObj->password, $user->password), 'expires' => TIME_NOW + 365 * 24 * 3600);
 		}
 		
 		$cookies = base64_encode(\wcf\util\JSON::encode($cookies));
