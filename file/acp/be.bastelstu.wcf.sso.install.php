@@ -9,6 +9,7 @@ namespace be\bastelstu\wcf\sso;
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
  * @package	be.bastelstu.wcf.sso
  */
+// @codingStandardsIgnoreFile
 final class Installation {
 	private $optionID;
 	public function __construct($packageID) {
