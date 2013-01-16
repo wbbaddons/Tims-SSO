@@ -1,8 +1,9 @@
 <?php
 namespace wcf\action;
+use \wcf\util\HeaderUtil;
 
 /**
- * Outputs 1pxx1px transparent gif.
+ * Sets proper cookies.
  * 
  * @author 	Tim Düsterhus
  * @copyright	2010-2013 Tim Düsterhus
@@ -17,20 +18,25 @@ class SSOAction extends AbstractAction {
 	public function execute() {
 		parent::execute();
 		
+		\wcf\system\session\SessionHandler::getInstance()->disableUpdate();
+		
 		if (isset($_GET['cookies']) && isset($_GET['key'])) {
 			$hmac = hash_hmac('sha1', $_GET['cookies'], SSO_SALT);
 			
 			if (!\wcf\util\PasswordUtil::secureCompare($_GET['key'], $hmac)) throw new \wcf\system\exception\IllegalLinkException();
 			
 			$cookies = \wcf\util\JSON::decode(base64_decode($_GET['cookies']));
-			\wcf\util\HeaderUtil::setCookie('userID', $cookies['userID'], $cookies['__time'] + 365 * 24 * 3600);
-			\wcf\util\HeaderUtil::setCookie('password', $cookies['password'], $cookies['__time'] + 365 * 24 * 3600);
+			
+			foreach ($cookies as $cookie) HeaderUtil::setCookie($cookie['name'], $cookie['value'], $cookie['expires']);
+			
+			header("Content-Type: image/gif");
+			echo base64_decode('R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==');
+			
+			$this->executed();
+			
+			exit;
 		}
 		
-		header("Content-Type: image/gif");
-		echo base64_decode('R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==');
-		
-		$this->executed();
-		exit;
+		throw new \wcf\system\exception\IllegalLinkException();
 	}
 }

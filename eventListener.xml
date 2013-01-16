@@ -8,5 +8,13 @@
 			<inherit>0</inherit>
 			<listenerclassname>wcf\system\event\listener\LoginFormSSOListener</listenerclassname>
 		</eventlistener>
+		
+		<eventlistener>
+			<eventclassname>wcf\action\LogoutAction</eventclassname>
+			<eventname>executed</eventname>
+			<environment>user</environment>
+			<inherit>0</inherit>
+			<listenerclassname>wcf\system\event\listener\LogoutActionSSOListener</listenerclassname>
+		</eventlistener>
 	</import>
 </data>

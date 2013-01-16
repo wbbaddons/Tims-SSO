@@ -3,7 +3,7 @@ namespace wcf\system\event\listener;
 use \wcf\system\application\ApplicationHandler;
 
 /**
- * Performs SSO after login.
+ * Logs out globally.
  *
  * @author 	Tim Düsterhus
  * @copyright	2010-2013 Tim Düsterhus
@@ -11,7 +11,7 @@ use \wcf\system\application\ApplicationHandler;
  * @package	be.bastelstu.wcf.chat
  * @subpackage	system.event.listener
  */
-class LoginFormSSOListener implements \wcf\system\event\IEventListener {
+class LogoutActionSSOListener implements \wcf\system\event\IEventListener {
 	/**
 	 * @see	\wcf\system\event\IEventListener::execute()
 	 */
@@ -30,22 +30,18 @@ class LoginFormSSOListener implements \wcf\system\event\IEventListener {
 			$abbreviations[] = ApplicationHandler::getInstance()->getAbbreviation($application->packageID);
 		}
 		
-		$cookies = array();
-		if (true || SSO_PERSISTENT_LOGIN && $eventObj->useCookies) {
-			$user = $eventObj->user;
-			
-			$cookies = array(
-				array('name' => 'userID', 'value' => $user->userID, 'expires' => TIME_NOW + 365 * 24 * 3600),
-				array('name' => 'password', 'value' => \wcf\util\PasswordUtil::getSaltedHash($eventObj->password, $user->password), 'expires' => TIME_NOW + 365 * 24 * 3600),
-				array('name' => 'cookieHash', 'value' => \wcf\system\session\SessionHandler::getInstance()->sessionID, 'expires' => 0)
-			);
-		}
+		$cookies = array(
+			array('name' => 'userID', 'value' => 0, 'expires' => 0),
+			array('name' => 'password', 'value' => '', 'expires' => 0),
+			array('name' => 'cookieHash', 'value' => '__invalid', 'expires' => 0)
+		);
 		
 		$cookies = base64_encode(\wcf\util\JSON::encode($cookies));
 		
 		\wcf\system\WCF::getTPL()->assign(array(
 			'sso' => true,
 			'ssoAbbreviations' => $abbreviations,
+			'ssoSessionID' => \wcf\system\session\SessionHandler::getInstance()->sessionID,
 			'ssoCookies' => $cookies,
 			'ssoHMAC' => hash_hmac('sha1', $cookies, SSO_SALT)
 		));
