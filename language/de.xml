@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd" languagecode="de">	
+	<category name="wcf.acp.option">
+		<item name="wcf.acp.option.category.security.general.sso"><![CDATA[Domainübergreifende Anmeldung]]></item>
+		<item name="wcf.acp.option.sso_persistent_login"><![CDATA[„Dauerhaft Einloggen“ unterstützen]]></item>
+		<item name="wcf.acp.option.sso_persistent_login.description"><![CDATA[Wenn diese Option aktiviert ist, dann werden auch die Daten zum „Dauerhaft Einloggen“ in alle Anwendungen übertragen. Andernfalls wird der Benutzer in allen anderen Anwendungen nur für die aktuelle Sitzung eingeloggt. In seltenen Fällen kann es passieren, dass die Daten beim Logout nicht korrekt entfernt werden und der Benutzer in einer Anwendung angemeldet bleibt.]]></item>
+		<item name="wcf.acp.option.sso_salt"><![CDATA[Geheimer Schlüssel]]></item>
+		<item name="wcf.acp.option.sso_salt.description"><![CDATA[Ein geheimer Schlüssel, welcher zur Überprüfung der übertragenen Daten dient. Dieser Schlüssel ist vertraulich zu behandeln! Der Schlüssel wurde bei der Installation zufällig generiert und sollte nur in Ausnahmefällen geändert werden.]]></item>
+	</category>
+</language>
