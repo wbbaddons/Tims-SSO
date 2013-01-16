@@ -2,8 +2,8 @@
 namespace wcf\action;
 
 /**
- * Does nothing.
- *
+ * Outputs 1pxx1px transparent gif.
+ * 
  * @author 	Tim Düsterhus
  * @copyright	2010-2013 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
@@ -17,8 +17,10 @@ class SSOAction extends AbstractAction {
 	public function execute() {
 		parent::execute();
 		
+		header("Content-Type: image/gif");
+		echo base64_decode('R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==');
+		
 		$this->executed();
-		header("HTTP/1.0 204 No Content");
 		exit;
 	}
 }
