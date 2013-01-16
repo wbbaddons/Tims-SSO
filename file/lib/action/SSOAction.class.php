@@ -17,6 +17,16 @@ class SSOAction extends AbstractAction {
 	public function execute() {
 		parent::execute();
 		
+		if (isset($_GET['cookies']) && isset($_GET['key'])) {
+			$hmac = hash_hmac('sha1', $_GET['cookies'], SSO_SALT);
+			
+			if (!\wcf\util\PasswordUtil::secureCompare($_GET['key'], $hmac)) throw new \wcf\system\exception\IllegalLinkException();
+			
+			$cookies = \wcf\util\JSON::decode(base64_decode($_GET['cookies']));
+			\wcf\util\HeaderUtil::setCookie('userID', $cookies['userID'], $cookies['__time'] + 365 * 24 * 3600);
+			\wcf\util\HeaderUtil::setCookie('password', $cookies['password'], $cookies['__time'] + 365 * 24 * 3600);
+		}
+		
 		header("Content-Type: image/gif");
 		echo base64_decode('R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==');
 		
