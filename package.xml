@@ -24,7 +24,9 @@
 	
 	<instructions type="install">
 		<instruction type="file">file.tar</instruction>
+		<instruction type="template">template.tar</instruction>
 		<instruction type="eventListener">eventListener.xml</instruction>
+		<instruction type="templateListener">templateListener.xml</instruction>
 		<instruction type="option">option.xml</instruction>
 		<instruction type="language">language/*.xml</instruction>
 		<instruction type="script" run="standalone">acp/be.bastelstu.wcf.sso.install.php</instruction>
@@ -32,7 +34,9 @@
 	
 	<instructions type="update" fromversion="*">
 		<instruction type="file">file.tar</instruction>
+		<instruction type="template">template.tar</instruction>
 		<instruction type="eventListener">eventListener.xml</instruction>
+		<instruction type="templateListener">templateListener.xml</instruction>
 		<instruction type="option">option.xml</instruction>
 		<instruction type="language">language/*.xml</instruction>
 	</instructions>
