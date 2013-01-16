@@ -1,20 +1,39 @@
 <?php
 namespace wcf\system\event\listener;
+use \wcf\system\application\ApplicationHandler;
 
 /**
  * Performs SSO after login.
  *
- * @author 	Maximilian Mader
- * @copyright	2010-2012 Tim Düsterhus
+ * @author 	Tim Düsterhus
+ * @copyright	2010-2013 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
  * @package	be.bastelstu.wcf.chat
  * @subpackage	system.event.listener
  */
-class ChatRouteListener implements \wcf\system\event\IEventListener {
+class LoginFormSSOListener implements \wcf\system\event\IEventListener {
 	/**
 	 * @see	\wcf\system\event\IEventListener::execute()
 	 */
 	public function execute($eventObj, $className, $eventName) {
+		$applications = ApplicationHandler::getInstance()->getApplications();
 		
+		// why the heck are you installing this plugin?!
+		if (count($applications) === 1) return;
+		
+		$activeApplication = ApplicationHandler::getInstance()->getActiveApplication();
+		
+		$abbreviations = array();
+		foreach ($applications as $key => $application) {
+			// we don't have to set cookies for the active application, skip
+			if ($application === $activeApplication) continue;
+			$abbreviations[] = ApplicationHandler::getInstance()->getAbbreviation($application->packageID);
+		}
+		
+		\wcf\system\WCF::getTPL()->assign(array(
+			'sso' => true,
+			'ssoAbbreviations' => $abbreviations,
+			'ssoSessionID' => \wcf\system\session\SessionHandler::getInstance()->sessionID
+		));
 	}
 }
