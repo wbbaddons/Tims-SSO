@@ -43,7 +43,7 @@ class LogoutActionSSOListener implements \wcf\system\event\IEventListener {
 			'ssoAbbreviations' => $abbreviations,
 			'ssoSessionID' => \wcf\system\session\SessionHandler::getInstance()->sessionID,
 			'ssoCookies' => $cookies,
-			'ssoHMAC' => hash_hmac('sha1', $cookies, SSO_SALT)
+			'ssoHMAC' => hash_hmac('sha1', \wcf\util\UserUtil::getIpAddress().$cookies, SSO_SALT)
 		));
 	}
 }

@@ -21,7 +21,7 @@ class SSOAction extends AbstractAction {
 		\wcf\system\session\SessionHandler::getInstance()->disableUpdate();
 		
 		if (isset($_GET['cookies']) && isset($_GET['key'])) {
-			$hmac = hash_hmac('sha1', $_GET['cookies'], SSO_SALT);
+			$hmac = hash_hmac('sha1', \wcf\util\UserUtil::getIpAddress().$_GET['cookies'], SSO_SALT);
 			
 			if (!\wcf\util\PasswordUtil::secureCompare($_GET['key'], $hmac)) throw new \wcf\system\exception\IllegalLinkException();
 			

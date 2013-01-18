@@ -47,7 +47,7 @@ class LoginFormSSOListener implements \wcf\system\event\IEventListener {
 			'sso' => true,
 			'ssoAbbreviations' => $abbreviations,
 			'ssoCookies' => $cookies,
-			'ssoHMAC' => hash_hmac('sha1', $cookies, SSO_SALT)
+			'ssoHMAC' => hash_hmac('sha1', \wcf\util\UserUtil::getIpAddress().$cookies, SSO_SALT)
 		));
 	}
 }
