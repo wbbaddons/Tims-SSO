@@ -6,7 +6,7 @@
 		<packagedescription language="de"><![CDATA[Loggt Benutzer automatisch in jeder Anwendung deines WoltLab Community Frameworks ein, selbst auf verschiedenen Domains.]]></packagedescription>
 		<standalone>0</standalone>
 		<version>1.0.0 Alpha 1</version>
-		<date>2012-04-14</date>
+		<date>2013-09-27</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -16,11 +16,8 @@
 	
 	<requiredpackages>
 		<requiredpackage minversion="2.0.0 Alpha 1">com.woltlab.wcf</requiredpackage>
+		<requiredpackage minversion="1.0.0 Beta 1" file="requirements/be.bastelstu.wcf.signer.tar">be.bastelstu.wcf.signer</requiredpackage>
 	</requiredpackages>
-	
-	<phprequirements>
-		<function><![CDATA[hash_hmac]]></function>
-	</phprequirements>
 	
 	<instructions type="install">
 		<instruction type="file">file.tar</instruction>
@@ -29,7 +26,6 @@
 		<instruction type="templateListener">templateListener.xml</instruction>
 		<instruction type="option">option.xml</instruction>
 		<instruction type="language">language/*.xml</instruction>
-		<instruction type="script" run="standalone">acp/be.bastelstu.wcf.sso.install.php</instruction>
 	</instructions>
 	
 	<instructions type="update" fromversion="*">

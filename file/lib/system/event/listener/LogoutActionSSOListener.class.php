@@ -36,14 +36,12 @@ class LogoutActionSSOListener implements \wcf\system\event\IEventListener {
 			array('name' => 'cookieHash', 'value' => '__invalid', 'expires' => 0)
 		);
 		
-		$cookies = base64_encode(\wcf\util\JSON::encode($cookies));
+		$data = array('cookies' => $cookies, 'ip' => \wcf\util\UserUtil::getIpAddress());
 		
 		\wcf\system\WCF::getTPL()->assign(array(
 			'sso' => true,
 			'ssoAbbreviations' => $abbreviations,
-			'ssoSessionID' => \wcf\system\session\SessionHandler::getInstance()->sessionID,
-			'ssoCookies' => $cookies,
-			'ssoHMAC' => hash_hmac('sha1', \wcf\util\UserUtil::getIpAddress().$cookies, SSO_SALT)
+			'ssoData' => \wcf\util\Signer::createSignedString(serialize($data))
 		));
 	}
 }

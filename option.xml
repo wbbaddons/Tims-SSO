@@ -13,11 +13,6 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
-			<option name="sso_salt">
-				<categoryname>security.general.sso</categoryname>
-				<optiontype>text</optiontype>
-				<defaultvalue></defaultvalue>
-			</option>
 		</options>
 	</import>
 </data>

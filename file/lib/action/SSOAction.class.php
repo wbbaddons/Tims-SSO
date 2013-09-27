@@ -20,14 +20,13 @@ class SSOAction extends AbstractAction {
 		
 		\wcf\system\session\SessionHandler::getInstance()->disableUpdate();
 		
-		if (isset($_GET['cookies']) && isset($_GET['key'])) {
-			$hmac = hash_hmac('sha1', \wcf\util\UserUtil::getIpAddress().$_GET['cookies'], SSO_SALT);
+		if (isset($_GET['data'])) {
+			$value = \wcf\util\Signer::getValueFromSignedString($_GET['data']);
+			if ($value === null) throw new \wcf\system\exception\IllegalLinkException();
+			$value = unserialize($value);
+			if ($value['ip'] !== \wcf\util\UserUtil::getIpAddress()) throw new \wcf\system\exception\IllegalLinkException();
 			
-			if (!\wcf\util\PasswordUtil::secureCompare($_GET['key'], $hmac)) throw new \wcf\system\exception\IllegalLinkException();
-			
-			$cookies = \wcf\util\JSON::decode(base64_decode($_GET['cookies']));
-			
-			foreach ($cookies as $cookie) HeaderUtil::setCookie($cookie['name'], $cookie['value'], $cookie['expires']);
+			foreach ($value['cookies'] as $cookie) HeaderUtil::setCookie($cookie['name'], $cookie['value'], $cookie['expires']);
 			
 			header("Content-Type: image/gif");
 			echo base64_decode('R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==');

@@ -41,13 +41,12 @@ class LoginFormSSOListener implements \wcf\system\event\IEventListener {
 			$cookies[] = array('name' => 'password', 'value' => \wcf\util\PasswordUtil::getSaltedHash($eventObj->password, $user->password), 'expires' => TIME_NOW + 365 * 24 * 3600);
 		}
 		
-		$cookies = base64_encode(\wcf\util\JSON::encode($cookies));
+		$data = array('cookies' => $cookies, 'ip' => \wcf\util\UserUtil::getIpAddress());
 		
 		\wcf\system\WCF::getTPL()->assign(array(
 			'sso' => true,
 			'ssoAbbreviations' => $abbreviations,
-			'ssoCookies' => $cookies,
-			'ssoHMAC' => hash_hmac('sha1', \wcf\util\UserUtil::getIpAddress().$cookies, SSO_SALT)
+			'ssoData' => \wcf\util\Signer::createSignedString(serialize($data))
 		));
 	}
 }
